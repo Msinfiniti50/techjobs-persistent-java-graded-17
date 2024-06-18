@@ -31,56 +31,39 @@ public class HomeController {
     @Autowired
     private JobRepository jobRepository;
 
-    private static final Logger log = LogManager.getLogger(HomeController.class);
+
 
 
 
     @RequestMapping("")
     public String index(Model model) {
         model.addAttribute("title", "My Jobs");
-        Iterable<Job> jobs = jobRepository.findAll();
-        log.info("Number of  jobs: " + ((Collection<?>) jobs).size());
-        model.addAttribute("jobs", jobs );
+
+
+        model.addAttribute("jobs", jobRepository.findAll() );
 
         return "index";
     }
 
     @GetMapping("add")
     public String displayAddJobForm(Model model) {
-        model.addAttribute("job", new Job());
-
-        Iterable<Skill> skillIterable = skillRepository.findAll();
-        List<Skill> skills = new ArrayList<>();
-        skillIterable.forEach((Skill skill) -> skills.add(skill));
-        model.addAttribute("skills", skills);
-
-        Iterable <Employer> employersIterable =  employerRepository.findAll();
-        List<Employer> employers = new ArrayList<>();
-        employersIterable.forEach((Employer employer) -> employers.add(employer));
-        model.addAttribute("employers", employers);
-
-        return "skills/add";
+        model.addAttribute("title", "Add Job");
+        model.addAttribute(new Job());
+        model.addAttribute("employer", employerRepository.findAll());
+        model.addAttribute("skills", skillRepository.findAll());
+        return "add";
     }
 
-    @PostMapping("/add")
+    @PostMapping("add")
     public String processAddJobForm(@Valid @ModelAttribute ("job") Job newJob,
                                     Errors errors, Model model, @RequestParam int employerId, @RequestParam List<Integer> skills) {
 
         if (errors.hasErrors()) {
-            model.addAttribute("title", "Add Job");
-            List <Employer> employers = (List<Employer>) employerRepository.findAll();
-            model.addAttribute("employers", employers);
-
-
-            return "skills/add";
+            return "add";
         }
 
-        Optional<Employer> optEmployer = employerRepository.findById(employerId);
-        if (optEmployer.isPresent()) {
-            Employer employer = optEmployer.get();
-            newJob.setEmployer(employer);
-
-        }
+        Employer employer = employerRepository.findById(employerId).orElse(new Employer());
+        newJob.setEmployer(employer);
 
         List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
         newJob.setSkills(skillObjs);
@@ -92,7 +75,7 @@ public class HomeController {
     }
 
 
-    @GetMapping("/view/{jobId}")
+    @GetMapping("view/{jobId}")
     public String displayViewJob(Model model, @PathVariable int jobId) {
         Optional<Job> optJob = jobRepository.findById(jobId);
         if(optJob.isPresent()) {

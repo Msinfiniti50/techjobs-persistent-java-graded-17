@@ -1,35 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="~{fragments :: head}"></head>
+
 <body class="container  body-content">
-<h1>Add Employer</h1>
+<h1 th:text="${'Employer: ' + employer.name}">Default Title</h1>
 
 <nav th:replace="~{fragments :: page-header}"></nav>
 
-<form method="post" style="max-width:600px;">
-    <div class="form-group">
-        <label th:for="name">Employer Name</label>
-        <input class="form-control" th:field="${employer.name}" />
-        <span th:errors="${employer.name}" class="error"></span>
-    </div>
-    <div class="form-group">
-        <label th:for="employer">Employer</label>
-        <select class="form-control" th:field="*{employer.id}">
-            <option th:each="employer: ${employers}"
-                    th:value="${employer.id}"
-                    th:text="${employer.name}">
+<div class="job-listing">
+    <p th:text="${'Name: ' + employer.name}"></p>
+    <p th:text="${'Location: ' + employer.location}"></p>
+    <p> Jobs:
+    <ul>
+        <li th:each="job : ${employer.jobs}">
+            <a th:href="@{'/view/' + ${job.id}}" th:text="${job.name}"></a>
+        </li>
+    </ul>
+    </p>
+</div>
 
-            </option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label th:for="location">Location</label>
-        <input class="form-control" th:field="${employer.location}" />
-        <span th:errors="${employer.location}" class="error"></span>
-    </div>
-    <input type="submit" value="Add Employer" />
-</form>
 
 </body>
 </html>

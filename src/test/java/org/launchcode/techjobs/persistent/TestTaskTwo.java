@@ -335,19 +335,19 @@ public class TestTaskTwo extends AbstractTest {
     * Verifies that the employerRepository field is correctly defined
     * */
 //    @Test
-//    public void testEmployerRepositoryDefinition () throws ClassNotFoundException {
-//        Class employerController = getClassByName("controllers.EmployerController");
-//        Field employerRepositoryField = null;
-//
-//        try {
-//            employerRepositoryField = employerController.getDeclaredField("employerRepository");
-//        } catch (NoSuchFieldException e) {
-//            fail("EmployerController does not have an employerRepository field");
-//        }
-//
-//        assertEquals(EmployerRepository.class, employerRepositoryField.getType(), "employerRepository must be of type EmployerRepository");
-//        assertNotNull(employerRepositoryField.getAnnotation(Autowired.class), "employerRepository must have the @Autowired annotation");
-//    }
+    public void testEmployerRepositoryDefinition () throws ClassNotFoundException {
+        Class employerController = getClassByName("controllers.EmployerController");
+        Field employerRepositoryField = null;
+
+        try {
+            employerRepositoryField = employerController.getDeclaredField("employerRepository");
+        } catch (NoSuchFieldException e) {
+            fail("EmployerController does not have an employerRepository field");
+        }
+
+        assertEquals(EmployerRepository.class, employerRepositoryField.getType(), "employerRepository must be of type EmployerRepository");
+        assertNotNull(employerRepositoryField.getAnnotation(Autowired.class), "employerRepository must have the @Autowired annotation");
+    }
 //
 //    /*
 //    * Verifies that EmployerController.index is properly defined
