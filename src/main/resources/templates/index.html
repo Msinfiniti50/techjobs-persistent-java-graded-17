@@ -12,6 +12,9 @@
         <li th:each="job : ${jobs}">
             <a th:href="@{'/view/' + ${job.id}}" th:text="${job.name}"></a>
         </li>
+        <li>
+            <a href="@{'/view' + ${job.id}}" th:text="Tester"></a>
+        </li>
     </ul>
 
 </div>

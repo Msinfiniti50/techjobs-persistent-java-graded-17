@@ -12,13 +12,22 @@
         <input class="form-control" th:field="${employer.name}" />
         <span th:errors="${employer.name}" class="error"></span>
     </div>
+    <div class="form-group">
+        <label th:for="employer">Employer</label>
+        <select class="form-control" th:field="*{employer.id}">
+            <option th:each="employer: ${employers}"
+                    th:value="${employer.id}"
+                    th:text="${employer.name}">
+
+            </option>
+        </select>
+    </div>
 
     <div class="form-group">
-        <label th:for="location">Employer Location</label>
+        <label th:for="location">Location</label>
         <input class="form-control" th:field="${employer.location}" />
         <span th:errors="${employer.location}" class="error"></span>
     </div>
-
     <input type="submit" value="Add Employer" />
 </form>
 
