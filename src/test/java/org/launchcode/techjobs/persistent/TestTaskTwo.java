@@ -334,7 +334,7 @@ public class TestTaskTwo extends AbstractTest {
     /*
     * Verifies that the employerRepository field is correctly defined
     * */
-//    @Test
+    @Test
     public void testEmployerRepositoryDefinition () throws ClassNotFoundException {
         Class employerController = getClassByName("controllers.EmployerController");
         Field employerRepositoryField = null;

@@ -32,12 +32,17 @@ private String location;
     public String getLocation() {
         return location;
     }
-    public static class TestTaskTwo {
-      public void method() {}
-    }
+
 
     public void setLocation(String location) {
         this.location = location;
+    }
+    public List<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
     }
 }
 

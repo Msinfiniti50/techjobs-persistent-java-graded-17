@@ -10,7 +10,7 @@ import java.util.List;
 public class Job extends AbstractEntity {
 
     @ManyToOne
-    @JoinColumn(name = "Employer_id")
+
     private Employer employer;
 
     @ManyToMany

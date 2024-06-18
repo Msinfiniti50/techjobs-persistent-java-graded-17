@@ -34,13 +34,12 @@ public class HomeController {
 
 
 
-
-    @RequestMapping("")
+    @RequestMapping("/")
     public String index(Model model) {
-        model.addAttribute("title", "My Jobs");
 
+        model.addAttribute("title", "MyJobs");
 
-        model.addAttribute("jobs", jobRepository.findAll() );
+        model.addAttribute("jobs", jobRepository.findAll());
 
         return "index";
     }
@@ -49,13 +48,13 @@ public class HomeController {
     public String displayAddJobForm(Model model) {
         model.addAttribute("title", "Add Job");
         model.addAttribute(new Job());
-        model.addAttribute("employer", employerRepository.findAll());
+        model.addAttribute("employers", employerRepository.findAll());
         model.addAttribute("skills", skillRepository.findAll());
         return "add";
     }
 
     @PostMapping("add")
-    public String processAddJobForm(@Valid @ModelAttribute ("job") Job newJob,
+    public String processAddJobForm(@ModelAttribute @Valid Job newJob,
                                     Errors errors, Model model, @RequestParam int employerId, @RequestParam List<Integer> skills) {
 
         if (errors.hasErrors()) {
@@ -69,13 +68,10 @@ public class HomeController {
         newJob.setSkills(skillObjs);
 
         jobRepository.save(newJob);
-
-
-        return "redirect:./";
+        return "redirect:";
     }
 
-
-    @GetMapping("view/{jobId}")
+    @GetMapping("/view/{jobId}")
     public String displayViewJob(Model model, @PathVariable int jobId) {
         Optional<Job> optJob = jobRepository.findById(jobId);
         if(optJob.isPresent()) {

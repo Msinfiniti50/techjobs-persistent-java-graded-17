@@ -21,7 +21,7 @@ private EmployerRepository employerRepository;
     @GetMapping("/")
     public String index(Model model) {
         Iterable<Employer> employers = employerRepository.findAll();
-       model.addAttribute("employer", employers);
+       model.addAttribute("employers", employers);
        return "employers/index";
     }
 
